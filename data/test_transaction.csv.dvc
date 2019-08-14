@@ -1,0 +1,8 @@
+md5: c59f2ccebc1f110a5a1cdd757a8916a2
+wdir: ..
+outs:
+- md5: 7ea6862ef4e078efb309e19fa49178fd
+  path: data/test_transaction.csv
+  cache: true
+  metric: false
+  persist: false

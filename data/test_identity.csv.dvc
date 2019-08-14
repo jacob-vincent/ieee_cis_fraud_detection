@@ -1,0 +1,8 @@
+md5: af54a8defdc925d93698b93a773b046b
+wdir: ..
+outs:
+- md5: aa0b82fec013d75b48358de84352a220
+  path: data/test_identity.csv
+  cache: true
+  metric: false
+  persist: false
