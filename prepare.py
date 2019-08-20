@@ -2,14 +2,16 @@ import sys
 
 import pandas as pd
 
-from utils import explode_categoricals
+from utils import explode_categoricals, get_email_region, get_email_site
 
-input_path = sys.argv[1]
-output_path = sys.argv[2]
-train_id = pd.read_csv(input_path)
+id_path = sys.argv[1]
+transaction_path = sys.argv[2]
+output_path = sys.argv[3]
+
+train_id = pd.read_csv(id_path)
 train_id = explode_categoricals(train_id)
 
-train_transaction = pd.read_csv("./data/train_transaction.csv")
+train_transaction = pd.read_csv(transaction_path)
 
 train_transaction["P_email_region"] = train_transaction["P_emaildomain"].apply(get_email_region)
 train_transaction["P_email_site"] = train_transaction["P_emaildomain"].apply(get_email_site)

@@ -1,8 +1,0 @@
-md5: e937e2ad0f0eec6a6c9b1e186e170213
-wdir: ..
-outs:
-- md5: 9a40232399dc8befd3dd521ddaf86e03
-  path: data/training_data.csv
-  cache: true
-  metric: false
-  persist: false

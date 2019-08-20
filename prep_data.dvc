@@ -1,0 +1,16 @@
+md5: 48fa046d581f4602f5db2a8bc1dc1890
+cmd: python prepare.py data/train_identity.csv data/train_transaction.csv data/training_data.csv
+wdir: .
+deps:
+- md5: 7d18538a323db1e5f90718d4dc042b56
+  path: prepare.py
+- md5: 8487db5001c8bad139f3318d5d3db416
+  path: data/train_identity.csv
+- md5: 58b4038d8715f5e11007b826bef00ce7
+  path: data/train_transaction.csv
+outs:
+- md5: faf16e68dba2ce16abf60587fdb7cd05
+  path: data/training_data.csv
+  cache: true
+  metric: false
+  persist: false
