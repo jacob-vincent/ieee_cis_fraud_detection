@@ -1,3 +1,6 @@
 #Jupyter Notebooks
 #*.ipynb
 *.ipynb_checkpoints
+
+#PyCharm
+.idea
