@@ -1,0 +1,24 @@
+md5: 7a0368ba1da19fd19a8a1dbd92ac6b9f
+cmd: python train.py data/training_data.csv model.pkl metrics
+wdir: .
+deps:
+- md5: e80c60ef0f3361889f5907f6608e9e69
+  path: train.py
+- md5: faf16e68dba2ce16abf60587fdb7cd05
+  path: data/training_data.csv
+outs:
+- md5: 3431340de95d96307a2a0300459d2fad
+  path: data/model.pkl
+  cache: true
+  metric: false
+  persist: false
+- md5: 0045e382deee94e57f5785ab6184b1ed
+  path: metrics/auc.metric
+  cache: true
+  metric: false
+  persist: false
+- md5: f9a14a4743329b216b9b74b3844695c8
+  path: metrics/pr_auc.metric
+  cache: true
+  metric: false
+  persist: false
