@@ -15,10 +15,12 @@ outs:
 - md5: 0045e382deee94e57f5785ab6184b1ed
   path: metrics/auc.metric
   cache: true
-  metric: false
+  metric:
+    type: raw
   persist: false
 - md5: f9a14a4743329b216b9b74b3844695c8
   path: metrics/pr_auc.metric
   cache: true
-  metric: false
+  metric:
+    type: raw
   persist: false
