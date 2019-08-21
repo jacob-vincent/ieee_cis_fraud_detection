@@ -10,7 +10,8 @@ from utils import reduce_mem_usage
 
 input_path = sys.argv[1]
 model_file_name = sys.argv[2]
-metrics_path = sys.argv[3]
+header_path = sys.argv[3]
+metrics_path = sys.argv[4]
 
 train_df = pd.read_csv(input_path)
 
@@ -30,6 +31,11 @@ trained_model = model.fit(x_train, y_train["isFraud"].values)
 
 with open(f"./data/{model_file_name}", "wb") as file:
     pickle.dump(trained_model, file)
+
+with open(f"data/{header_path}", "w") as file:
+    for i in x_train.columns:
+        file.write(i)
+
 
 y_prob = trained_model.predict_proba(x_val)[:, 1]
 roc_auc = roc_auc_score(y_val["isFraud"].values, y_prob)
