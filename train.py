@@ -13,6 +13,7 @@ model_file_name = sys.argv[2]
 header_path = sys.argv[3]
 metrics_path = sys.argv[4]
 
+print("Reading training data...")
 train_df = pd.read_csv(input_path)
 
 train_df, val_df = train_test_split(train_df)
@@ -25,13 +26,15 @@ x_val, y_val = val_df.drop(["TransactionID","isFraud"], axis=1), val_df[["Transa
 # x_train = reduce_mem_usage(x_train, sparse=True)
 
 # x_val = reduce_mem_usage(x_val, sparse=True)
-
+print("Training model...")
 model = lgb.LGBMClassifier(boosting_type="goss", n_estimators=500, objective="binary", silent=False, random_state=42)
 trained_model = model.fit(x_train, y_train["isFraud"].values)
 
+print("Saving model...")
 with open(f"./data/{model_file_name}", "wb") as file:
     pickle.dump(trained_model, file)
 
+print("Saving model header file...")
 with open(f"data/{header_path}", "w") as file:
     for i in x_train.columns:
         file.write(i)
@@ -46,3 +49,6 @@ with open(f"{metrics_path}/auc.metric", "w") as file:
 
 with open(f"{metrics_path}/pr_auc.metric", "w") as file:
     file.write(f"{pr_auc: .5f}")
+
+print(f"ROC-AUC: {roc_auc}")
+print(f"PR-AUC: {pr_auc}")
