@@ -32,6 +32,10 @@ print("Reading in model...")
 with open(f"data/{model_name}", "rb") as file:
     model = pickle.load(file)
 
+print("Reading in model header...")
+with open(f"data/{header_path}", "r") as file:
+    header = file.readlines()
+
 x_test = test_df.drop(["TransactionID"], axis=1)
 y_prob = model.predict_proba(x_test)[:, 1]
 

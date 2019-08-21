@@ -38,6 +38,7 @@ print("Saving model header file...")
 with open(f"data/{header_path}", "w") as file:
     for i in x_train.columns:
         file.write(i)
+        file.write("\n")
 
 
 y_prob = trained_model.predict_proba(x_val)[:, 1]
