@@ -23,4 +23,4 @@ train_transaction = explode_categoricals(train_transaction.drop(["P_emaildomain"
 print(train_transaction.shape)
 train_df = train_id.merge(right=train_transaction, on="TransactionID", how="right")
 print(train_df.shape)
-train_df.to_csv(output_path)
+train_df.to_csv(output_path, index=False)

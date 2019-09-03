@@ -27,7 +27,7 @@ x_val, y_val = val_df.drop(["TransactionID","isFraud"], axis=1), val_df[["Transa
 
 # x_val = reduce_mem_usage(x_val, sparse=True)
 print("Training model...")
-model = lgb.LGBMClassifier(boosting_type="goss", n_estimators=500, objective="binary", silent=False, random_state=42)
+model = lgb.LGBMClassifier(boosting_type="goss", n_estimators=500, min_data_in_leaf=3, objective="binary", silent=False, random_state=42)
 trained_model = model.fit(x_train, y_train["isFraud"].values)
 
 print("Saving model...")

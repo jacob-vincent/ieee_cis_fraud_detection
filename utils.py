@@ -59,7 +59,8 @@ def reduce_mem_usage(data_df, sparse=False):
 
 def explode_categoricals(data_df, keep_na=True):
     """
-    Take a dataframe, find the categorical data stored as strings, and explode those columns into dummy variables
+    Take a dataframe, find the categorical data stored as strings, and explode those columns into dummy variables.\
+    Only variables with less than 10% missing values are kept.
 
     :param data_df: Input dataframe to examine for categorical data
     :type data_df: :class:`pandas.DataFrame`
@@ -69,6 +70,7 @@ def explode_categoricals(data_df, keep_na=True):
     :rtype: :class:`pandas.DataFrame`
     """
 
+    total_rows = data_df.shape[0]
     # Identify categorical columns not already binarized
     string_columns = []
     for column in data_df.columns:
@@ -77,9 +79,12 @@ def explode_categoricals(data_df, keep_na=True):
 
     # Create dummy variables for categorical columns
     for c in string_columns:
-        dummy_df = pd.get_dummies(data_df[c], prefix=c, dummy_na=keep_na)
-        data_df = pd.concat([data_df, dummy_df], axis=1).drop(c, axis=1)
-
+        na_rows = data_df[data_df[c].isna()].shape[0]
+        if na_rows/total_rows <= 0.1 and len(data_df[c].value_counts()) > 1 and (1 not in data_df[c].value_counts().values):
+            dummy_df = pd.get_dummies(data_df[c], prefix=c, dummy_na=keep_na)
+            data_df = pd.concat([data_df, dummy_df], axis=1).drop(c, axis=1)
+        else:
+            data_df = data_df.drop(c, axis=1)
     return data_df
 
 
@@ -95,3 +100,37 @@ def get_email_site(text_entry):
         return "nan"
     else:
         return str(text_entry).split(".")[0]
+
+
+def match_features(input_df, features_array):
+    """
+
+    :param input_df:
+    :param features_array:
+    :return:
+    """
+
+    input_columns = list(input_df.columns.values)
+    # Add missing features as 0
+    for include_feature in features_array:
+        if include_feature not in input_columns:
+            input_df[include_feature] = 0
+
+    # Find features not present in training data and remove them
+    to_exclude = []
+    for exclude_feature in input_columns:
+        if exclude_feature not in features_array:
+            to_exclude.append(exclude_feature)
+    input_df = input_df.drop(list(set(to_exclude)), axis=1)
+
+    # Rearrange features into the proper order
+    input_df = input_df[features_array]
+
+    if list(input_df.columns.values) == features_array:
+        return input_df
+    else:
+        feature_list = list(input_df.columns.values) + list(features_array)
+        for i in feature_list:
+            if i not in input_df.columns.values or i not in features_array:
+                print(i)
+        # assert list(input_df.columns.values) == features_array, "feature mismatch"
