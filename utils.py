@@ -111,26 +111,28 @@ def match_features(input_df, features_array):
     """
 
     input_columns = list(input_df.columns.values)
+    # print(len(features_array), len(input_columns))
+    assert type(input_columns[0]) == str
+
     # Add missing features as 0
     for include_feature in features_array:
         if include_feature not in input_columns:
+            print("Adding", include_feature)
             input_df[include_feature] = 0
-
+            assert include_feature in input_df.columns.values
+            
     # Find features not present in training data and remove them
-    to_exclude = []
     for exclude_feature in input_columns:
         if exclude_feature not in features_array:
-            to_exclude.append(exclude_feature)
-    input_df = input_df.drop(list(set(to_exclude)), axis=1)
-
+            print("Excluding", exclude_feature)
+            input_df = input_df.drop(exclude_feature, axis=1)
+            print(input_df.shape)
     # Rearrange features into the proper order
+    # print("Features array:", features_array)
+    # print("Input features:", input_df.columns.values)
     input_df = input_df[features_array]
+    num_columns = len(input_df.columns.values)
+    num_features = len(features_array)
+    assert num_columns == num_features, f"input_df has length {num_columns} instead of {num_features}"
 
-    if list(input_df.columns.values) == features_array:
-        return input_df
-    else:
-        feature_list = list(input_df.columns.values) + list(features_array)
-        for i in feature_list:
-            if i not in input_df.columns.values or i not in features_array:
-                print(i)
-        # assert list(input_df.columns.values) == features_array, "feature mismatch"
+    return input_df

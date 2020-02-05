@@ -1,0 +1,17 @@
+md5: f13ba4cc43b12aaf3adcd0e36ecc6ae0
+cmd: python predict.py data/test_identity.csv data/test_transaction.csv model.pkl
+  data/header_file.txt data/predictions.csv
+wdir: .
+deps:
+- md5: 0800b1c006f37f1c24f85f0f96fffccd
+  path: train.py
+- md5: 091aec1b374e842f4d4630b9f1ca3cc1
+  path: data/model.pkl
+- md5: 6a8844859af365be3b5190c156aff99f
+  path: data/header_file.txt
+outs:
+- md5: cd420e7f24a148d0034fb8c95d4c3d75
+  path: data/predictions.csv
+  cache: true
+  metric: false
+  persist: false

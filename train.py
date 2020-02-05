@@ -6,8 +6,6 @@ import pandas as pd
 from sklearn.metrics import average_precision_score, roc_auc_score
 from sklearn.model_selection import train_test_split
 
-from utils import reduce_mem_usage
-
 input_path = sys.argv[1]
 model_file_name = sys.argv[2]
 header_path = sys.argv[3]
@@ -35,7 +33,7 @@ with open(f"./data/{model_file_name}", "wb") as file:
     pickle.dump(trained_model, file)
 
 print("Saving model header file...")
-with open(f"data/{header_path}", "w") as file:
+with open(f"./data/{header_path}", "w") as file:
     for i in x_train.columns:
         file.write(i)
         file.write("\n")
