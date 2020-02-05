@@ -104,10 +104,15 @@ def get_email_site(text_entry):
 
 def match_features(input_df, features_array):
     """
+    Remove any extra features found in the input data and create missing features so that the modeling algorithm can
+        make predictions with the data
 
-    :param input_df:
-    :param features_array:
-    :return:
+    :param input_df: Pandas dataframe of input data, which may contain missing or extraneous features
+    :type input_df: :class:`pandas.DataFrame`
+    :param features_array: List of features the trained modeling algorithm expects to see in the data
+    :type features_array: list
+    :return: Dataframe with features the modeling algorithm can accept and make predictions with
+    :rtype: :class:`pandas.DataFrame`
     """
 
     input_columns = list(input_df.columns.values)
